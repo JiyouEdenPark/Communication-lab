@@ -2,7 +2,7 @@
 
 This project provides example code for learning and comparing various wireless communication methods available on ESP32/ESP8266 based boards.
 
-## 📡 Supported Wireless Communication Methods
+## Supported Wireless Communication Methods
 
 ### 1. ESP-NOW
 **ESP32/ESP8266 Exclusive Peer-to-Peer Communication**
@@ -14,11 +14,11 @@ This project provides example code for learning and comparing various wireless c
 - **Simple Setup**: Communication possible with just MAC address
 
 #### When to Use?
-- ✅ Sensor networks (temperature, humidity, etc.)
-- ✅ Remote control or button-based device control
-- ✅ Direct communication between IoT devices
-- ✅ Environments without WiFi router
-- ✅ Battery-powered devices
+- Sensor networks (temperature, humidity, etc.)
+- Remote control or button-based device control
+- Direct communication between IoT devices
+- Environments without WiFi router
+- Battery-powered devices
 
 #### Communication Architecture: Peer-to-Peer (P2P)
 **Symmetric Communication Structure**
@@ -112,11 +112,11 @@ Client C ──┘
 - **Request-Response**: Client requests, server responds pattern
 
 #### When to Use?
-- ✅ Remote control/monitoring via internet
-- ✅ Web server setup (display sensor data on web page)
-- ✅ Integration with cloud services (AWS, Firebase, etc.)
-- ✅ When multiple devices need to communicate simultaneously
-- ✅ When long-range communication is needed
+- Remote control/monitoring via internet
+- Web server setup (display sensor data on web page)
+- Integration with cloud services (AWS, Firebase, etc.)
+- When multiple devices need to communicate simultaneously
+- When long-range communication is needed
 
 #### Example Code
 - `wifi-server/` - WiFi server (for SAMD boards)
@@ -138,7 +138,7 @@ client.connect(SERVER_IP, 80);
 
 ---
 
-## 🏗️ Communication Architecture Comparison
+## Communication Architecture Comparison
 
 ### Peer-to-Peer (P2P) vs Server-Client
 
@@ -181,7 +181,7 @@ Client A  Client B  Client C
 
 ---
 
-## 🔄 Technology Comparison Table
+## Technology Comparison Table
 
 | Feature | ESP-NOW | WiFi Server/Client |
 |---------|---------|-------------------|
@@ -196,7 +196,7 @@ Client A  Client B  Client C
 
 ---
 
-## 🎯 Project Selection Guide
+## Project Selection Guide
 
 ### Want to send sensor data to another ESP32?
 → Use **ESP-NOW**
@@ -215,7 +215,7 @@ Client A  Client B  Client C
 
 ---
 
-## 📚 Recommended Learning Order
+## Recommended Learning Order
 
 1. **ESP-NOW** (Simplest)
    - Understand basic concepts
@@ -229,7 +229,7 @@ Client A  Client B  Client C
 
 ---
 
-## 🛠️ Hardware Requirements
+## Hardware Requirements
 
 ### ESP-NOW
 - ESP32 or ESP8266 board
@@ -241,7 +241,7 @@ Client A  Client B  Client C
 
 ---
 
-## 📝 Notes
+## Notes
 
 1. **ESP-NOW**: Exclusive to ESP32/ESP8266, cannot be used on other boards
 2. **WiFi**: Router SSID and password must be configured in code
@@ -249,13 +249,13 @@ Client A  Client B  Client C
 
 ---
 
-## 🔗 References
+## References
 
 - [ESP-NOW Official Documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/network/esp_now.html)
 - [Arduino WiFi Library](https://www.arduino.cc/reference/en/libraries/wifi/)
 
 ---
 
-## 📧 Contact
+## Contact
 
 If you have questions or suggestions about this project, please open an issue.
