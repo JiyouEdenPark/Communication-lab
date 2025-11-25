@@ -10,6 +10,10 @@ const char* WIFI_PASS = "YOUR_WIFI_PASSWORD";   // WiFi password
 const char* SERVER_IP   = "YOUR_SERVER_IP";  // Example, change to real IP
 const uint16_t SERVER_PORT = 80;
 
+// Client ID - Set this to 1 or 2 to control LED 1 or LED 2
+// This ID is sent to the server when connecting
+const uint8_t CLIENT_ID = 1;  // Change to 1 or 2
+
 // ============================================================================
 // Pin Definitions
 // ============================================================================
@@ -107,7 +111,6 @@ void connectWiFi() {
  * Automatically reconnects on disconnection
  */
 void runClient() {
-  static bool connectedToServer = false;
   static bool lastButtonState = HIGH;  // For button edge detection
 
   // Handle button press (send TOGGLE command when button is pressed)
@@ -117,8 +120,12 @@ void runClient() {
   if (buttonState == LOW && lastButtonState == HIGH) {
     // Button was just pressed - send TOGGLE command to server
     if (client.connected()) {
-      Serial.println("[BUTTON] Sending TOGGLE to server");
-      client.println("TOGGLE");
+      String toggleCmd = "TOGGLE";
+      toggleCmd += CLIENT_ID;
+      Serial.print("[BUTTON] Sending ");
+      Serial.print(toggleCmd);
+      Serial.println(" to server");
+      client.println(toggleCmd);
       client.flush();  // Force immediate transmission
     } else {
       Serial.println("[BUTTON] Not connected to server, cannot send TOGGLE");
@@ -127,7 +134,10 @@ void runClient() {
   lastButtonState = buttonState;
 
   // Connect to server if not connected
-  if (!connectedToServer) {
+  if (!client.connected()) {
+    // Clean up previous connection before reconnecting
+    client.stop();
+    
     Serial.print("[CLIENT] Trying to connect to server: ");
     Serial.print(SERVER_IP);
     Serial.print(":");
@@ -135,13 +145,9 @@ void runClient() {
 
     if (client.connect(SERVER_IP, SERVER_PORT)) {
       Serial.println("[CLIENT] Connected to server!");
-      connectedToServer = true;
-
+      
       // Set shorter timeout for faster response (default is 1000ms)
       client.setTimeout(50);
-
-      // Send initial greeting message
-      client.println("hello from client");
     } else {
       Serial.println("[CLIENT] Failed to connect, retrying in 5 seconds");
       delay(5000);
@@ -150,20 +156,12 @@ void runClient() {
   }
 
   // Receive and process messages from server
-  if (client.connected() && client.available()) {
+  if (client.available()) {
     String resp = client.readStringUntil('\n');
     resp.trim();
     if (resp.length() > 0) {
       Serial.print("[CLIENT] Server response: ");
       Serial.println(resp);
     }
-  }
-
-  // Handle disconnection - reset connection state and wait before retry
-  if (!client.connected()) {
-    Serial.println("[CLIENT] Disconnected from server. Will try to reconnect.");
-    client.stop();
-    connectedToServer = false;
-    delay(2000);  // Wait before attempting reconnection
   }
 }
